@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="quiz.css" />
+    <title>Document</title>
+
+	<script>
+		var now=0;
+		var correct=0;
+		var all =4;
+		var questions =["1+1?","2+3?","4+6?","4+4?"];
+		var choices =[[2,3,4,5],[3,5,7,9],[2,5,10,13],[3,5,9,8]];
+		var answers=["1","2","3","4"];
+		var lihtml="";
+
+
+
+		function updatePage(e,self){
+			console.log(e);
+			if(e==answers[now]){
+				correct=correct+1;
+			}
+			now=now+1;
+			if (now==4){
+				document.querySelector('body').innerHTML = "<h1> TOTAL SCORE : "+correct+"</h1> <a href=\"quiz.html\"><button class=\"start-btn\">Play</button></a>";
+			}
+			else{
+				document.querySelector('.question').innerHTML = questions[now];
+				for (var i=0; i<4; i++){
+					var childclass = ".child"+(i+1)
+					document.querySelector(childclass).innerHTML = '<div class="child-inner">'+(i+1)+'</div>'+choices[now][i];
+				}//for 문 닫기
+
+				document.querySelector('.score').innerHTML = correct;
+				document.querySelector('.meter').value=25*now;
+				document.querySelector(".question-p").innerHTML="question "+(now+1)+"/4";
+			}//else문 닫기
+		}//updatePage()닫기
+
+	</script>
+  </head>
+  <body>
+    <div class="first-container">
+      <div class="question-meter">
+        <p class="question-p">question 1/4</p>
+        <progress class="meter" max="100" value="0"></progress>
+      </div>
+
+      <div class="score-container">
+        <p style="margin: 0;">Score</p>
+        <p class="score">0</p>
+      </div>
+    </div>
+    <div class="second-container">
+      <h1 class="question">1+1?</h1>
+      <div class="choices">
+		  <div class="child1" value ="1" onclick = "updatePage('1',this)">
+			  <div class="child-inner">1</div>2
+		  </div>
+		  <div class="child2" value ="2" onclick = "updatePage('2',this)">
+			  <div class="child-inner">2</div>3
+		  </div>
+		  <div class="child3" value ="3" onclick= "updatePage('3',this)">
+			  <div class="child-inner">3</div>4
+		  </div>
+		  <div class="child4" value ="4" onclick= "updatePage('4',this)">
+			  <div class="child-inner">4</div>5
+		  </div>
+	  </div>
+    </div>
+    <script onload="updatePage()"></script>
+  </body>
+</html>
